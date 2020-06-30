@@ -8,6 +8,7 @@ from urllib.request import urlretrieve
 from distance import dataset_transform
 
 def write_output(train, test, fn, distance, point_type='float', count=100):
+	print("Starting ground truth to h5df")
 	from ann_benchmarks.algorithms.bruteforce import BruteForceBLAS
 	n = 0
 	f = h5py.File(fn, 'w')
@@ -37,23 +38,41 @@ def write_output(train, test, fn, distance, point_type='float', count=100):
 	f.close()
 
 def train_test_split(X, test_size=10000):
+	print("Starting train test split")
 	import sklearn.model_selection
 	print('Splitting %d*%d into train/test' % X.shape)
 	return learn.model_selection.train_test_split(X, test_size=test_size, random_state=1)
 
 
+def trim_end(location, vector):return vector[:len(vector)-location]
 
+def vector_order_valid(fv):
+	count = 0
+	print("Begining checks ...")
+	for i in range(0,len(fv),97):
+		if fv[i] != 96:
+			count = count + 1
+			print("no 96 at position:  "+ str(i) +" instead it is " + str(fv[i]))
+	print("vector order check done, there were " + str(count) + "mismatches")
+	print()
+	print()
+	if len(fv)/97 != 0:
+		print("Vector has been clipped checking for clip location")
+		for i in range(1,100):
+			if fv[-i] == 96:
+				print("final vector is only: " + str(i) + " dimentions long")
+				fv_trim = trim_end(i,fv)
+				break
+	print("Done!")
+	return fv_trim
 
+def merge_base(out_fn):
+	with open("base_00", "ab") as myfile, open("base_01", "rb") as file2:
+	myfile.write(file2.read())
+	fv = numpy.fromfile("base_00",dtype="int32")
+	dim = fv.view(numpy.int32)[0]
+	new = vector_order_valid(fv)
+	new = new.reshape(-1, dim + 1)[:,1:]
+	X_train, X_test = train_test_split(new)
+	#write_output(X_train, X_test, out_fn, 'angular')
 
-
-#with open("base_05", "ab") as myfile, open("base_06", "rb") as file2:
-#	myfile.write(file2.read())
-
-raw_file = numpy.fromfile("base_06", dtype=numpy.float32)
-true_vec = raw_file.reshape(-1, 1 + raw_file.view(numpy.int32)[0])[:, 1:]
-print("Dim: " + str(len(true_vec[0])))
-print("len: " + str(len(true_vec)))
-
-fv =  true_vec
-X_train, X_test = train_test_split(fv)
-write_output(X_train, X_test, out_fn, 'angular')
