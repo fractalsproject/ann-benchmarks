@@ -44,6 +44,7 @@ def get_dataset(which):
 # just rely on the prepared datasets at http://ann-benchmarks.com
 
 def write_output(train, test, fn, distance, point_type='float', count=100):
+    print("TRYING TO WRITE OUTPUT")
     from ann_benchmarks.algorithms.bruteforce import BruteForceBLAS
     n = 0
     f = h5py.File(fn, 'w')
@@ -197,6 +198,7 @@ def fashion_mnist(out_fn):
 # from http://sites.skoltech.ru/compvision/noimi/. The download logic is adapted
 # from the script https://github.com/arbabenko/GNOIMI/blob/master/downloadDeep1B.py.
 def deep_image(out_fn):
+    print("TRYING TO DOWNLOAD DEEP1B")
     yadisk_key = 'https://yadi.sk/d/11eDCm7Dsn9GA'
     response = urlopen('https://cloud-api.yandex.net/v1/disk/public/resources/download?public_key=' \
         + yadisk_key + '&path=/deep10M.fvecs')
@@ -393,10 +395,13 @@ def lastfm(out_fn, n_dimensions, test_size=50000):
     # after that transformation a cosine lookup will return the same results
     # as the inner product on the untransformed data
     write_output(item_factors, user_factors, out_fn, 'angular')
+def outputer():
+	pass
 
 
 DATASETS = {
     'deep-image-96-angular': deep_image,
+    'base0-1_merge.hdf5':outputer,
     'fashion-mnist-784-euclidean': fashion_mnist,
     'gist-960-euclidean': gist,
     'glove-25-angular': lambda out_fn: glove(out_fn, 25),

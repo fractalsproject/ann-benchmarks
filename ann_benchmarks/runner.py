@@ -101,12 +101,12 @@ def run_individual_query(algo, X_train, X_test, distance, count, run_count,
 
 def run(definition, dataset, count, run_count, batch):
     algo = instantiate_algorithm(definition)
-    assert not definition.query_argument_groups \
-        or hasattr(algo, "set_query_arguments"), """\
-error: query argument groups have been specified for %s.%s(%s), but the \
-algorithm instantiated from it does not implement the set_query_arguments \
-function""" % (definition.module, definition.constructor, definition.arguments)
-
+#    assert not definition.query_argument_groups \
+#        or hasattr(algo, "set_query_arguments"), """\
+#error: query argument groups have been specified for %s.%s(%s), but the \
+#algorithm instantiated from it does not implement the set_query_arguments \
+#function""" % (definition.module, definition.constructor, definition.arguments)
+#
     D = get_dataset(dataset)
     X_train = numpy.array(D['train'])
     X_test = numpy.array(D['test'])
