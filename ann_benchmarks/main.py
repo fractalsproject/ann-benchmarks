@@ -221,6 +221,8 @@ def main():
                 print(args.timeout)
                 print(args.batch)
                 print(str(args.cpu_number))
+                sys.stdout.flush()
+                sys.stderr.flush()
                 run(definition, args.dataset, args.count, args.runs,
                     args.batch)
             else:
@@ -231,6 +233,8 @@ def main():
                 print(args.timeout)
                 print(args.batch)
                 print(str(args.cpu_number))
+                sys.stdout.flush()
+                sys.stderr.flush()
                 #run_docker(definition, args.dataset, args.count,
                            #args.runs, args.timeout, args.batch, str(args.cpu_number))
         except KeyboardInterrupt:
