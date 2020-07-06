@@ -101,12 +101,14 @@ def run_individual_query(algo, X_train, X_test, distance, count, run_count,
 
 def run(definition, dataset, count, run_count, batch):
     algo = instantiate_algorithm(definition)
-#    assert not definition.query_argument_groups \
-#        or hasattr(algo, "set_query_arguments"), """\
+    assert not definition.query_argument_groups \
+        or hasattr(algo, "set_query_arguments"), """\
 #error: query argument groups have been specified for %s.%s(%s), but the \
 #algorithm instantiated from it does not implement the set_query_arguments \
 #function""" % (definition.module, definition.constructor, definition.arguments)
 #
+    print("Running Algo")
+    print("Loading Dataset...",dataset)
     D = get_dataset(dataset)
     X_train = numpy.array(D['train'])
     X_test = numpy.array(D['test'])
@@ -124,6 +126,7 @@ def run(definition, dataset, count, run_count, batch):
 
         t0 = time.time()
         memory_usage_before = algo.get_memory_usage()
+        print("Before Algo Fit")
         algo.fit(X_train)
         build_time = time.time() - t0
         index_size = algo.get_memory_usage() - memory_usage_before

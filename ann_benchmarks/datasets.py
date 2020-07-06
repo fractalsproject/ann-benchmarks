@@ -217,6 +217,15 @@ def deep_image(out_fn):
     X_train, X_test = train_test_split(fv)
     write_output(X_train, X_test, out_fn, 'angular')
 
+def deep_image_local(out_fn):
+
+    print("OUTFN=", out_fn)
+    filename = os.path.join('data',out_fn)
+    print("TRYING TO OPEN FILE AT", filename)
+
+    # We should probably do some file checks here
+
+
 def transform_bag_of_words(filename, n_dimensions, out_fn):
     import gzip
     from scipy.sparse import lil_matrix
@@ -401,7 +410,7 @@ def outputer():
 
 DATASETS = {
     'deep-image-96-angular': deep_image,
-    'base0-1_merge.hdf5':outputer,
+    'base0-1-merge':deep_image_local,
     'fashion-mnist-784-euclidean': fashion_mnist,
     'gist-960-euclidean': gist,
     'glove-25-angular': lambda out_fn: glove(out_fn, 25),

@@ -221,8 +221,8 @@ def main():
                 print(args.timeout)
                 print(args.batch)
                 print(str(args.cpu_number))
-                #run(definition, args.dataset, args.count, args.runs,
-                    #args.batch)
+                run(definition, args.dataset, args.count, args.runs,
+                    args.batch)
             else:
                 print(definition)
                 print(args.dataset)
