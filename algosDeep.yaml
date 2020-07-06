@@ -39,7 +39,7 @@ float:
       run-groups:
         base:
           args: [[64]]
-          query-args: [[1, 5, 10, 50]]
+          query-args: [[200]]
     faiss-gpu:
       disabled: true
       docker-tag: ann-benchmarks-faiss
@@ -623,7 +623,7 @@ bit:
       run-groups:
         base:
           args: [[64]]
-          query-args: [[1, 5, 10, 50]]
+          query-args: [[200]]
   jaccard:
     bf:
       docker-tag: ann-benchmarks-sklearn
