@@ -109,6 +109,7 @@ def main():
     if args.list_algorithms:
         list_algorithms(args.definitions)
         sys.exit(0)
+        print(agrs)
 
     # Nmslib specific code
     # Remove old indices stored on disk
@@ -121,7 +122,7 @@ def main():
     distance = dataset.attrs['distance']
     definitions = get_definitions(
         args.definitions, dimension, point_type, distance, args.count)
-
+    print(definitions)
     # Filter out, from the loaded definitions, all those query argument groups
     # that correspond to experiments that have already been run. (This might
     # mean removing a definition altogether, so we can't just use a list
@@ -144,7 +145,7 @@ def main():
                     query_argument_groups=not_yet_run)
             filtered_definitions.append(definition)
     definitions = filtered_definitions
-
+    print(definitions)
     random.shuffle(definitions)
 
     if args.algorithm:
@@ -213,11 +214,25 @@ def main():
 
         try:
             if args.local:
-                run(definition, args.dataset, args.count, args.runs,
-                    args.batch)
+                print(definition)
+                print(args.dataset)
+                print(args.count)
+                print(args.runs)
+                print(args.timeout)
+                print(args.batch)
+                print(str(args.cpu_number))
+                #run(definition, args.dataset, args.count, args.runs,
+                    #args.batch)
             else:
-                run_docker(definition, args.dataset, args.count,
-                           args.runs, args.timeout, args.batch, str(args.cpu_number))
+                print(definition)
+                print(args.dataset)
+                print(args.count)
+                print(args.runs)
+                print(args.timeout)
+                print(args.batch)
+                print(str(args.cpu_number))
+                #run_docker(definition, args.dataset, args.count,
+                           #args.runs, args.timeout, args.batch, str(args.cpu_number))
         except KeyboardInterrupt:
             break
         except:
