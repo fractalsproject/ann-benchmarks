@@ -38,7 +38,7 @@ def create_plot(all_data, raw, x_log, y_log, xn, yn, fn_out, linestyles,
         plt.gca().set_xscale('log')
     if y_log:
         plt.gca().set_yscale('log')
-    plt.gca().set_title(get_plot_label(xm, ym))
+    plt.gca().set_title("Faiss-ivf Performance on 54 Million Vectors with nlist = 64")
     plt.gca().set_ylabel(ym['description'])
     plt.gca().set_xlabel(xm['description'])
     box = plt.gca().get_position()
@@ -47,7 +47,7 @@ def create_plot(all_data, raw, x_log, y_log, xn, yn, fn_out, linestyles,
                      bbox_to_anchor=(1, 0.5), prop={'size': 9})
     plt.grid(b=True, which='major', color='0.65', linestyle='-')
     if 'lim' in xm:
-        plt.xlim(xm['lim'])
+        plt.xlim([0.7,xm['lim'][1]])
     if 'lim' in ym:
         plt.ylim(ym['lim'])
     plt.savefig(fn_out, bbox_inches='tight')
