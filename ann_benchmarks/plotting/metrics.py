@@ -77,6 +77,8 @@ def rel(dataset_distances, run_distances, metrics):
 
 
 def queries_per_second(queries, attrs):
+    print("q p s")
+    print(attrs)
     return 1.0 / attrs["best_search_time"]
 
 
@@ -148,5 +150,12 @@ all_metrics = {
         "description": "Index size (kB)/Queries per second (s)",
         "function": lambda true_distances, run_distances, metrics, run_attrs: index_size(true_distances, run_attrs) / queries_per_second(true_distances, run_attrs), # noqa
         "worst": float("inf")
+    },
+    #Braden Added this one for time in seconds
+    "seconds": {
+        "description": "Seconds for each nlist",
+        "function": lambda true_distances, run_distances, metrics, run_attrs: queries_per_second(true_distances, run_attrs),  # noqa
+        "worst": float("-inf")
     }
 }
+ 

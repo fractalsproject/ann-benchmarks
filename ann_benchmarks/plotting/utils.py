@@ -39,10 +39,22 @@ def create_pointset(data, xn, yn):
 
 def compute_metrics(true_nn_distances, res, metric_1, metric_2,
                     recompute=False):
+    print()
+    print("NOW ENTERING COMPUTE METRICS")
+    print()
+    print()
     all_results = {}
     for i, (properties, run) in enumerate(res):
+        if properties['name'][16:20] =="1024":
+            properties['name'] = "nlist=1024" + properties['name'][8:]
+        if properties['name'][16:20] =="8192":
+            properties['name'] = "nlist=8192" + properties['name'][8:]
+        if properties['name'][16:18] =="64":
+            properties['name'] = "nlist=0064" + properties['name'][8:]
         algo = properties['algo']
         algo_name = properties['name']
+        print(run)
+
         # cache distances to avoid access to hdf5 file
         run_distances = numpy.array(run['distances'])
         if recompute and 'metrics' in run:
@@ -55,17 +67,17 @@ def compute_metrics(true_nn_distances, res, metric_1, metric_2,
         metric_2_value = metrics[metric_2]['function'](
             true_nn_distances,
             run_distances, metrics_cache, properties)
-
         print('%3d: %80s %12.3f %12.3f' %
               (i, algo_name, metric_1_value, metric_2_value))
 
-        all_results.setdefault(algo, []).append(
+        all_results.setdefault(algo_name[:10], []).append(
             (algo, algo_name, metric_1_value, metric_2_value))
 
     return all_results
 
 
 def compute_all_metrics(true_nn_distances, run, properties, recompute=False):
+    print("NOW ENTERING COMPUTE ALL METRICS")
     algo = properties["algo"]
     algo_name = properties["name"]
     print('--')
