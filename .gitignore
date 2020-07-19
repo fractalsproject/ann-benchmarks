@@ -10,3 +10,5 @@ data/*
 results/*
 results*
 out*.txt
+merge_*
+base_*

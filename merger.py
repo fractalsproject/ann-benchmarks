@@ -79,10 +79,28 @@ def vector_order_valid(fv):
 	return fv_new
 
 if __name__== "__main__":
+    start = time.time()
     print("Starting......")
-    #with open("base_00", "ab") as myfile, open("base_01", "rb") as file2:
-    #	myfile.write(file2.read())
-    fv = numpy.fromfile("base_00",dtype="int32")
+    print("Merging 0 and 1...")
+    with open("merge_0123", "ab") as myfile, open("/home/braden/GNOIMI/base_01", "rb") as file1:
+    	myfile.write(file1.read())
+        myfile.flush()
+        myfile.close()
+    print("Merging 0 and 1 and 2...")
+    with open("merge_0123", "ab") as myfile, open("/home/braden/GNOIMI/base_02", "rb") as file2:
+    	myfile.write(file2.read())
+        myfile.flush()
+        myfile.close()
+    print("Merging 0 and 1 and 2 and 3...")
+    with open("merge_0123", "ab") as myfile, open("/home/braden/GNOIMI/base_03", "rb") as file3:
+    	myfile.write(file3.read())
+        myfile.flush()
+        myfile.close()
+    print("Merge Done")
+    end = time.time()
+    print("Merge done at " +str(end-start) + " seconds")
+
+    fv = numpy.fromfile("merge_0123",dtype="int32")
     dim = fv.view(numpy.int32)[0]
     fv_new = vector_order_valid(fv)
     new = fv_new.reshape(-1, dim + 1)[:,1:]
@@ -93,6 +111,6 @@ if __name__== "__main__":
     #X_train, X_test = train_test_split(new)
     #X_train = X_train[:10000,:]
     start = time.time()
-    write_output(X_train, X_test, "Base0-1_merge", 'angular')
+    write_output(X_train, X_test, "Base0-1-2-3_merge", 'angular')
     end = time.time()
-    print("Function done at " +str(end-start) + " seconds")
+    print("DB done at " +str(end-start) + " seconds")
