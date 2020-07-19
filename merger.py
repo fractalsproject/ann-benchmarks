@@ -79,32 +79,40 @@ def vector_order_valid(fv):
 	return fv_new
 
 if __name__== "__main__":
-    start = time.time()
-    print("Starting......")
-    print("Merging 0 and 1...")
-    with open("merge_0123", "ab") as myfile, open("/home/braden/GNOIMI/base_01", "rb") as file1:
-    	myfile.write(file1.read())
-        myfile.flush()
-        myfile.close()
-    print("Merging 0 and 1 and 2...")
-    with open("merge_0123", "ab") as myfile, open("/home/braden/GNOIMI/base_02", "rb") as file2:
-    	myfile.write(file2.read())
-        myfile.flush()
-        myfile.close()
-    print("Merging 0 and 1 and 2 and 3...")
-    with open("merge_0123", "ab") as myfile, open("/home/braden/GNOIMI/base_03", "rb") as file3:
-    	myfile.write(file3.read())
-        myfile.flush()
-        myfile.close()
-    print("Merge Done")
-    end = time.time()
-    print("Merge done at " +str(end-start) + " seconds")
 
+    if 0:
+        start = time.time()
+        print("Starting Merge.....")
+        print("Merging 0 and 1...")
+        with open("merge_0123", "ab") as myfile, open("/home/braden/GNOIMI/base_01", "rb") as file1:
+            myfile.write(file1.read())
+            myfile.flush()
+            myfile.close()
+        print("Merging 0 and 1 and 2...")
+        with open("merge_0123", "ab") as myfile, open("/home/braden/GNOIMI/base_02", "rb") as file2:
+            myfile.write(file2.read())
+            myfile.flush()
+            myfile.close()
+        print("Merging 0 and 1 and 2 and 3...")
+        with open("merge_0123", "ab") as myfile, open("/home/braden/GNOIMI/base_03", "rb") as file3:
+            myfile.write(file3.read())
+            myfile.flush()
+            myfile.close()
+        print("Merge Done")
+        end = time.time()
+        print("Merge done at " +str(end-start) + " seconds")
+
+    print("Creating HD5PY DB...")
+    print("Getting FV from merge...")
     fv = numpy.fromfile("merge_0123",dtype="int32")
     dim = fv.view(numpy.int32)[0]
+    print("Validating...")
     fv_new = vector_order_valid(fv)
+    print("Reshaping...")
     new = fv_new.reshape(-1, dim + 1)[:,1:]
+    print("Getting new view...")
     f_new = new.view(numpy.float32)
+    print("Creating split...")
     #Need better split method
     X_test = f_new[-10000:]
     X_train =f_new[:-10000]
