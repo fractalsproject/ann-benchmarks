@@ -21,13 +21,21 @@ def write_output(train, test, fn, distance, point_type='float', count=10):
     
     #MEM error about half the time
     try:
+        print("creating train")
         f.create_dataset('train', (len(train), 96), chunks = True, dtype=test.dtype)[:] = train
+        print("creating test")
         f.create_dataset('test', (len(test), len(test[0])), dtype=test.dtype)[:] = test
+        print("creating neighbords")
         neighbors = f.create_dataset('neighbors', (len(test), count), dtype='i')
+        print("creating distances")
         distances = f.create_dataset('distances', (len(test), count), dtype='f')
+        print("bruteforce blas start")
         bf = BruteForceBLAS(distance)
+        print("bruteforce blas end")
         train = dataset_transform[distance](train)
+        print("transform test")
         test = dataset_transform[distance](test)
+        print("fit")
         bf.fit(train)
         queries = []
         for i, x in enumerate(test):
